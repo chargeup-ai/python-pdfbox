@@ -61,7 +61,8 @@ class PDFBox(object):
         Verify SHA512 checksum.
         """
 
-        return hashlib.sha512(data).hexdigest() == digest
+        # use startswith to account for checksums that have the filename appended at the end
+        return digest.startswith(hashlib.sha512(data).hexdigest()) 
 
     def _get_latest_pdfbox_url(self):
         r = urllib.request.urlopen(pdfbox_archive_url)
